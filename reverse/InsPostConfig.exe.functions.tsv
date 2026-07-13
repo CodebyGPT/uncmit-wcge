@@ -1,0 +1,81 @@
+entry	name	signature	body_size	called_functions
+0040205c	PromptForPassword	pointer __fastcall PromptForPassword(undefined4 caption, byte * message)	153	
+004020f6	.ctor	void __fastcall .ctor(undefined4 param_1, byte * param_2)	7	
+004020fe	.ctor	void __fastcall .ctor(char * param_1, byte * param_2)	40	
+00402127	.ctor	void __fastcall .ctor(undefined4 param_1, char * param_2)	19	
+0040213b	ShowDialog	void __fastcall ShowDialog(char param_1, char * param_2)	1	
+0040213d	get_BackgroundColor	pointer __fastcall get_BackgroundColor(char param_1, undefined4 param_2)	6	
+00402144	set_BackgroundColor	void __fastcall set_BackgroundColor(char param_1, undefined4 param_2)	7	
+0040214c	get_BufferSize	pointer __fastcall get_BufferSize(char param_1, char * param_2)	8	
+00402155	set_BufferSize	void __stdcall set_BufferSize(void)	25	
+0040216f	get_CursorPosition	pointer __fastcall get_CursorPosition(char param_1, char * param_2)	16	
+00402180	set_CursorPosition	void __stdcall set_CursorPosition(void)	25	
+0040219a	get_CursorSize	int __fastcall get_CursorSize(undefined4 param_1, byte * param_2)	6	
+004021a1	set_CursorSize	void __fastcall set_CursorSize(undefined4 value, byte * param_2)	7	
+004021a9	FlushInputBuffer	void __fastcall FlushInputBuffer(byte * param_1, byte * param_2)	11	
+004021b5	get_ForegroundColor	pointer __fastcall get_ForegroundColor(byte * param_1, byte * param_2)	6	
+004021bc	set_ForegroundColor	void __fastcall set_ForegroundColor(undefined4 value, byte * param_2)	7	
+004021c4	GetBufferContents	byte * __fastcall GetBufferContents(byte * rectangle, byte * param_2)	11	
+004021d0	get_KeyAvailable	bool __fastcall get_KeyAvailable(byte * param_1, byte * param_2)	11	
+004021dc	get_MaxPhysicalWindowSize	pointer __fastcall get_MaxPhysicalWindowSize(byte * param_1, byte * param_2)	16	
+004021ed	get_MaxWindowSize	pointer __fastcall get_MaxWindowSize(undefined4 param_1, byte * param_2)	16	
+0040220c	ReadKey	pointer __fastcall ReadKey(byte * options, byte * param_2)	19	
+00402220	ScrollBufferContents	void __fastcall ScrollBufferContents(byte * source, byte * destination)	11	
+0040222c	SetBufferContents	void __fastcall SetBufferContents(byte * rectangle, byte * fill)	11	
+00402238	SetBufferContents	void __fastcall SetBufferContents(byte * origin, byte * contents)	11	
+00402250	get_WindowPosition	pointer __fastcall get_WindowPosition(undefined4 param_1, byte * param_2)	34	
+00402273	set_WindowPosition	void __stdcall set_WindowPosition(void)	25	
+00402298	get_WindowSize	pointer __fastcall get_WindowSize(char * param_1, byte * param_2)	34	
+004022bb	set_WindowSize	void __stdcall set_WindowSize(void)	25	
+004022d5	get_WindowTitle	char * __fastcall get_WindowTitle(undefined4 param_1, byte * param_2)	6	
+004022dc	set_WindowTitle	void __fastcall set_WindowTitle(undefined4 value, byte * param_2)	7	
+004022e4	.ctor	void __fastcall .ctor(undefined4 param_1, byte * param_2)	7	
+004022ec	.ctor	void __fastcall .ctor(undefined4 param_1, char * param_2)	18	
+004022ff	Prompt	pointer __fastcall Prompt(byte * caption, byte * message)	6	
+00402306	PromptForChoice	int __fastcall PromptForChoice(byte * caption, byte * message)	2	
+00402314	PromptForCredential	pointer __fastcall PromptForCredential(byte * caption, byte * message)	81	
+00402374	PromptForCredential	pointer __fastcall PromptForCredential(int caption, byte * message)	79	
+004023c4	get_RawUI	pointer __fastcall get_RawUI(undefined4 param_1, byte * param_2)	7	
+004023cc	ReadLine	char * __fastcall ReadLine(undefined4 param_1, byte * param_2)	6	
+004023e0	ReadLineAsSecureString	pointer __fastcall ReadLineAsSecureString(undefined4 param_1, byte * param_2)	51	
+00402414	Write	void __fastcall Write(undefined4 foregroundColor, byte * backgroundColor)	19	
+00402428	Write	void __fastcall Write(char * value, undefined4 param_2)	20	
+0040243d	WriteDebugLine	void __fastcall WriteDebugLine(undefined4 message, undefined4 param_2)	19	
+00402451	WriteErrorLine	void __fastcall WriteErrorLine(undefined4 value, undefined4 param_2)	20	
+00402466	WriteLine	void __fastcall WriteLine(undefined4 value, undefined4 param_2)	20	
+0040247b	WriteProgress	void __fastcall WriteProgress(undefined4 record, undefined4 param_2)	1	
+0040247d	WriteVerboseLine	void __fastcall WriteVerboseLine(byte * message, undefined4 param_2)	19	
+00402491	WriteWarningLine	void __fastcall WriteWarningLine(byte * message, undefined4 param_2)	20	
+004024b4	.ctor	void __fastcall .ctor(undefined4 app, byte * ui)	64	
+004024f5	get_CurrentCulture	pointer __fastcall get_CurrentCulture(byte * param_1, int param_2)	7	
+004024fd	get_CurrentUICulture	pointer __fastcall get_CurrentUICulture(byte * param_1, int param_2)	7	
+00402505	get_InstanceId	pointer __fastcall get_InstanceId(byte * param_1, int param_2)	7	
+0040250d	get_Name	char * __fastcall get_Name(byte * param_1, byte * param_2)	6	
+00402514	get_UI	pointer __fastcall get_UI(byte * param_1, undefined4 param_2)	7	
+0040251c	get_Version	pointer __fastcall get_Version(byte * param_1, byte * param_2)	10	
+00402527	EnterNestedPrompt	void __fastcall EnterNestedPrompt(byte * param_1, byte * param_2)	1	
+00402529	ExitNestedPrompt	void __fastcall ExitNestedPrompt(byte * param_1, byte * param_2)	1	
+0040252b	NotifyBeginApplication	void __fastcall NotifyBeginApplication(byte * param_1, byte * param_2)	1	
+0040252d	NotifyEndApplication	void __fastcall NotifyEndApplication(byte * param_1, byte * param_2)	1	
+0040252f	SetShouldExit	void __fastcall SetShouldExit(undefined4 exitCode, byte * param_2)	25	
+00402549	get_ShouldExit	bool __fastcall get_ShouldExit(undefined4 param_1, byte * param_2)	7	
+00402551	set_ShouldExit	void __fastcall set_ShouldExit(char * param_1, byte * param_2)	8	
+0040255a	get_ExitCode	int __fastcall get_ExitCode(undefined4 param_1, byte * param_2)	7	
+00402562	set_ExitCode	void __fastcall set_ExitCode(byte * value, byte * param_2)	8	
+0040256b	.ctor	void __fastcall .ctor(undefined4 param_1, byte * param_2)	7	
+00402573	.ctor	void __fastcall .ctor(undefined4 param_1, byte * param_2)	7	
+0040257b	.ctor	void __fastcall .ctor(undefined4 param_1, byte * param_2)	7	
+00402583	.ctor	void __fastcall .ctor(undefined4 param_1, byte * param_2)	7	
+0040258b	<Main>b__1	void __fastcall <Main>b__1(int r, byte * param_2)	30	
+004025b8	<Main>b__0	void __fastcall <Main>b__0(byte * sender, byte * e)	70	
+00402611	<Main>b__2	void __fastcall <Main>b__2(undefined4 sender, byte * e)	34	
+00402634	<Main>b__3	void __fastcall <Main>b__3(undefined4 sender, byte * e)	34	
+00402657	<Main>b__4	void __fastcall <Main>b__4(undefined4 sender, byte * e)	34	
+0040267a	<Main>b__5	void __fastcall <Main>b__5(undefined4 sender, byte * e)	34	
+0040269d	<Main>b__6	void __fastcall <Main>b__6(byte * sender, byte * e)	39	
+004026c5	<Main>b__7	void __fastcall <Main>b__7(byte * sender, byte * e)	39	
+004026ed	<Main>b__8	void __fastcall <Main>b__8(int ar, uint param_2)	21	
+00402710	Main	int __fastcall Main(int args, uint param_2)	992	
+00402b3d	CurrentDomain_UnhandledException	void __fastcall CurrentDomain_UnhandledException(uint * sender, char * e)	11	
+00402b49	.ctor	void __fastcall .ctor(undefined4 param_1, char * param_2)	7	
+0040810e	entry	undefined entry(void)	6	

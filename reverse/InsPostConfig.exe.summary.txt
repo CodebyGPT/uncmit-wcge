@@ -1,0 +1,13 @@
+Program: InsPostConfig.exe
+ExecutablePath: /C:/temp/wim-extract/install-temp/InsPostConfig.exe
+Language: x86:LE:32:default
+Compiler: windows
+ImageBase: 00400000
+MinAddress: 00400000
+MaxAddress: 0040c1ff
+ExecutableFormat: Portable Executable (PE)
+MemoryBlocks:
+  Headers 00400000-004001ff size=0x200 r=true w=false x=false initialized=true
+  .text 00402000-004081ff size=0x6200 r=true w=false x=true initialized=true
+  .rsrc 0040a000-0040a7ff size=0x800 r=true w=false x=false initialized=true
+  .reloc 0040c000-0040c1ff size=0x200 r=true w=false x=false initialized=true

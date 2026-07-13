@@ -1,0 +1,13 @@
+Program: InsPreConfig.exe
+ExecutablePath: /C:/temp/wim-extract/install-temp/InsPreConfig.exe
+Language: x86:LE:32:default
+Compiler: windows
+ImageBase: 00400000
+MinAddress: 00400000
+MaxAddress: 004101ff
+ExecutableFormat: Portable Executable (PE)
+MemoryBlocks:
+  Headers 00400000-004001ff size=0x200 r=true w=false x=false initialized=true
+  .text 00402000-0040c3ff size=0xa400 r=true w=false x=true initialized=true
+  .rsrc 0040e000-0040e7ff size=0x800 r=true w=false x=false initialized=true
+  .reloc 00410000-004101ff size=0x200 r=true w=false x=false initialized=true

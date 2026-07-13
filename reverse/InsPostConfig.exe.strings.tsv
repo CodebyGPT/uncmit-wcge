@@ -1,0 +1,28 @@
+address	length	value
+004080f2	11	_CorExeMain
+004080fe	11	mscoree.dll
+0040a102	11	VarFileInfo
+0040a122	11	Translation
+0040a146	14	StringFileInfo
+0040a16a	8	000004b0
+0040a182	8	Comments
+0040a194	9	CMGE 系统部署
+0040a1ae	11	CompanyName
+0040a1c8	10	神州网信技术有限公司
+0040a1e6	15	FileDescription
+0040a208	13	InsPostConfig
+0040a22a	11	FileVersion
+0040a244	10	1.1345.0.1
+0040a262	12	InternalName
+0040a27c	17	InsPostConfig.exe
+0040a2a6	14	LegalCopyright
+0040a2c4	39	Copyright © 2019 - 2021 神州网信技术有限公司 版权所有
+0040a31a	16	OriginalFilename
+0040a33c	17	InsPostConfig.exe
+0040a366	11	ProductName
+0040a380	13	InsPostConfig
+0040a3a2	14	ProductVersion
+0040a3c0	10	1.1345.0.1
+0040a3de	16	Assembly Version
+0040a400	10	1.1345.0.1
+0040a418	490	���<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">\r\n  <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>\r\n  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">\r\n    <security>\r\n      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">\r\n        <requestedExecutionLevel level="asInvoker" uiAccess="false"/>\r\n      </requestedPrivileges>\r\n    </security>\r\n  </trustInfo>\r\n</assembly>\r\n
