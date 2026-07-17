@@ -62,7 +62,7 @@ DISABLE:
 - Redirect ClipSVC\AltActivationClient → CmitClient.exe
 - Register CmitClientSVC / Daily Runner recreate
 - EPrivilege.exe -U:S CMGEInstaller.exe 00000200
-- Import CMIT certs; remove+reimport government CA (DigiCert remove+reimport also disabled)
+- ALL certificate operations: RemoveCert + Import-Certificate (CMIT, gov, DigiCert) fully disabled
 - Register SMx (Wst*Config -register)
 PRESERVE:
 - LGPO /g import
@@ -115,4 +115,5 @@ Import targets (all into LocalMachine):
 Action: in all 6 exes, comment out every `Import-Certificate` / `InstallCert` / `RemoveCert` call.
 Certificate imports are unnecessary: Windows 10 includes DigiCert roots by default
 via Microsoft Root Certificate Program (KB931125 / Windows Update), and CMIT/government
-CA certs are removed for privacy.
+CA certs are removed for privacy. All `RemoveCert` calls (remove-then-reimport pattern
+in UpgradeConfig) are also disabled since the corresponding re-import is disabled.
