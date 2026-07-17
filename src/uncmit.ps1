@@ -113,7 +113,7 @@ $form.Controls.Add($btnRun)
 
 $logBox = [System.Windows.Forms.TextBox]::new()
 $logBox.Location = [System.Drawing.Point]::new(12, 80)
-$logBox.Size = [Size]::new(608, 300)
+$logBox.Size = [System.Drawing.Size]::new(608, 300)
 $logBox.Multiline = $true
 $logBox.ScrollBars = "Vertical"
 $logBox.ReadOnly = $true
