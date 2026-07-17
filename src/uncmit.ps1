@@ -31,16 +31,37 @@ if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administra
 
 # ---------------------------------------------------------------------------
 # Paths: 6 CMIT deployment exes inside the WIM (relative to mount root)
-# Source = de-CMIT builds shipped next to this script (dist\)
+# Source = de-CMIT builds. Prefer a local dist\ folder (offline/dev use); if
+# absent, auto-download from the project's GitHub raw URL at runtime.
 # ---------------------------------------------------------------------------
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
-# dist\ may sit next to this script, or one level up (repo layout: src\ + dist\).
+$RemoteBase = "https://raw.githubusercontent.com/CodebyGPT/uncmit-wcge/master/dist"
+
 if (Test-Path (Join-Path $ScriptDir "dist")) {
     $DistDir = Join-Path $ScriptDir "dist"
 } elseif (Test-Path (Join-Path $ScriptDir "..\dist")) {
     $DistDir = Resolve-Path (Join-Path $ScriptDir "..\dist")
 } else {
-    $DistDir = Join-Path $ScriptDir "dist"
+    # No local dist\: download on the fly into a temp folder.
+    $DistDir = Join-Path $env:TEMP ("uncmit-dist-" + [guid]::NewGuid().ToString("N").Substring(0,8))
+    New-Item -ItemType Directory -Path $DistDir -Force | Out-Null
+    $DownloadNeeded = $true
+}
+
+function Get-DeCMITBuilds($dir, $base) {
+    $names = @("InsPreConfig","InsPostConfig","UpgradeConfig","UpgradeSchdTask","ResetPreConfig","ResetPostConfig")
+    foreach ($n in $names) {
+        $url = "$base/$n.exe"
+        $out = Join-Path $dir "$n.exe"
+        Log "Downloading $n.exe ..."
+        try {
+            Invoke-WebRequest -Uri $url -OutFile $out -UseBasicParsing -ErrorAction Stop
+        } catch {
+            Log "ERROR: failed to download $url : $_"
+            return $false
+        }
+    }
+    return $true
 }
 
 $ReplaceMap = @(
@@ -196,7 +217,13 @@ $btnRun.Add_Click({
         $btnRun.Enabled = $true; $btnBrowse.Enabled = $true
         return
     }
-    if (-not (Test-Path $DistDir)) {
+    if ($DownloadNeeded) {
+        if (-not (Get-DeCMITBuilds $DistDir $RemoteBase)) {
+            Log "ERROR: could not download de-CMIT builds. Check network and GitHub reachability."
+            $btnRun.Enabled = $true; $btnBrowse.Enabled = $true
+            return
+        }
+    } elseif (-not (Test-Path $DistDir)) {
         Log "ERROR: dist\ folder not found next to this script: $DistDir"
         $btnRun.Enabled = $true; $btnBrowse.Enabled = $true
         return
