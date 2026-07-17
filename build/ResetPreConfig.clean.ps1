@@ -840,24 +840,24 @@ Start-Process -WindowStyle Hidden -FilePath "$GpExe" -ArgumentList "$GpCfg" -Ver
 
 
 # Install Certificates
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\Beijing ROOT CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\Beijing GCA.cer" -CertStoreLocation Cert:\LocalMachine\CA
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\BJCA.cer" -CertStoreLocation Cert:\LocalMachine\CA
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CEGN_RCA.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CEGN_OCA.cer" -CertStoreLocation Cert:\LocalMachine\CA
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT Root Authority.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT SubP.cer" -CertStoreLocation Cert:\LocalMachine\CA
-InstallCert -CertFile "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT signature.cer" -StoreLocation LocalMachine -StoreName TrustedPublisher
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Assured ID Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Global Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert High Assurance EV Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\GDCA_ROOT_CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\GDCA_Guangdong_Certificate_Authority.cer" -CertStoreLocation Cert:\LocalMachine\CA
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\ROOTCA.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\UCA Root.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\BeiJing ROOT CA New.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\Beijing GCA New.cer" -CertStoreLocation Cert:\LocalMachine\CA
-Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\BJCA New.cer" -CertStoreLocation Cert:\LocalMachine\CA
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\Beijing ROOT CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\Beijing GCA.cer" -CertStoreLocation Cert:\LocalMachine\CA
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\BJCA.cer" -CertStoreLocation Cert:\LocalMachine\CA
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CEGN_RCA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CEGN_OCA.cer" -CertStoreLocation Cert:\LocalMachine\CA
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT Root Authority.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT SubP.cer" -CertStoreLocation Cert:\LocalMachine\CA
+# UNCMIT-DISABLED InstallCert -CertFile "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT signature.cer" -StoreLocation LocalMachine -StoreName TrustedPublisher
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Assured ID Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Global Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert High Assurance EV Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\GDCA_ROOT_CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\GDCA_Guangdong_Certificate_Authority.cer" -CertStoreLocation Cert:\LocalMachine\CA
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\ROOTCA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\UCA Root.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\BeiJing ROOT CA New.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\Beijing GCA New.cer" -CertStoreLocation Cert:\LocalMachine\CA
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\BJCA New.cer" -CertStoreLocation Cert:\LocalMachine\CA
 #Import-Certificate -FilePath "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources\Certificates\PK.cer" -CertStoreLocation Cert:\LocalMachine\Root
 
 

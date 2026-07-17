@@ -789,9 +789,9 @@ RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificat
 RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT Root Authority.cer" -StoreLocation LocalMachine -StoreName Root
 RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT SubP.cer" -StoreLocation LocalMachine -StoreName CA  #####
 RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT signature.cer" -StoreLocation LocalMachine -StoreName TrustedPublisher
-RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Assured ID Root CA.cer" -StoreLocation LocalMachine -StoreName Root
-RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Global Root CA.cer" -StoreLocation LocalMachine -StoreName Root
-RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert High Assurance EV Root CA.cer" -StoreLocation LocalMachine -StoreName Root
+# UNCMIT-DISABLED RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Assured ID Root CA.cer" -StoreLocation LocalMachine -StoreName Root
+# UNCMIT-DISABLED RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Global Root CA.cer" -StoreLocation LocalMachine -StoreName Root
+# UNCMIT-DISABLED RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert High Assurance EV Root CA.cer" -StoreLocation LocalMachine -StoreName Root
 RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\GDCA_ROOT_CA.cer" -StoreLocation LocalMachine -StoreName Root
 RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\GDCA_Guangdong_Certificate_Authority.cer" -StoreLocation LocalMachine -StoreName Root
 RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\ROOTCA.cer" -StoreLocation LocalMachine -StoreName Root
@@ -806,9 +806,9 @@ RemoveCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificat
 # UNCMIT-DISABLED Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT Root Authority.cer" -CertStoreLocation Cert:\LocalMachine\Root
 # UNCMIT-DISABLED Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT SubP.cer" -CertStoreLocation Cert:\LocalMachine\CA
 # UNCMIT-DISABLED InstallCert -CertFile "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\CMIT signature.cer" -StoreLocation LocalMachine -StoreName TrustedPublisher
-Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Assured ID Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Global Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert High Assurance EV Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Assured ID Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert Global Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
+# UNCMIT-DISABLED Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\DigiCert High Assurance EV Root CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
 # UNCMIT-DISABLED Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\GDCA_ROOT_CA.cer" -CertStoreLocation Cert:\LocalMachine\Root
 # UNCMIT-DISABLED Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\GDCA_Guangdong_Certificate_Authority.cer" -CertStoreLocation Cert:\LocalMachine\CA
 # UNCMIT-DISABLED Import-Certificate -FilePath "$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\Certificates\ROOTCA.cer" -CertStoreLocation Cert:\LocalMachine\Root

@@ -38,7 +38,7 @@ DISABLE:
 - Install CMITActivation / CMITControlCenter / CmitUpdateAgent / CMITOfflineUpdateInstaller
 - Register CmitClientSVC service (via InstallUtil in InsPost, not here)
 - Import CMIT Root Authority → Root; CMIT SubP → CA; CMIT signature → TrustedPublisher
-- Import ALL government CA certs (Beijing ROOT CA, BJCA, CEGN_*, GDCA_*, SHECA, UCA, **ROOTCA/OSCCA** — privacy-first: clear all)
+- Import ALL certificate imports (DigiCert included — Win10 ships these by default)
 - Register SMx crypto provider (Wst*Config.exe -register)
 PRESERVE:
 - LGPO.exe /g import
@@ -62,7 +62,7 @@ DISABLE:
 - Redirect ClipSVC\AltActivationClient → CmitClient.exe
 - Register CmitClientSVC / Daily Runner recreate
 - EPrivilege.exe -U:S CMGEInstaller.exe 00000200
-- Import CMIT certs; remove+reimport government CA (clear all incl. OSCCA)
+- Import CMIT certs; remove+reimport government CA (DigiCert remove+reimport also disabled)
 - Register SMx (Wst*Config -register)
 PRESERVE:
 - LGPO /g import
@@ -87,7 +87,7 @@ DISABLE:
 - SMx register (Wst*Config.exe -register, win32+win64)
 PRESERVE:
 - LGPO.exe /g import (local policy — keep)
-- (cert import loop handled by BasicAfterImageApply.cmd, not here)
+- (all cert imports disabled — 19 Import-Certificate/InstallCert calls disabled in clean build)
 
 ### ResetPostConfig.exe (reset post)
 DISABLE:
@@ -110,8 +110,9 @@ Import targets (all into LocalMachine):
 - CMIT Root Authority → Root           [DISABLE — backdoor]
 - CMIT SubP → CA                       [DISABLE — backdoor]
 - CMIT signature → TrustedPublisher    [DISABLE — backdoor]
-- DigiCert Assured ID / Global / High Assurance EV → Root  [PRESERVE]
+- DigiCert Assured ID / Global / High Assurance EV → Root  [DISABLE — Win10 ships these via root update; no deploy-time import needed]
 
-Action: in the 6 exes, comment out every `Import-Certificate` / `InstallCert` call
-EXCEPT the three DigiCert lines. In BasicAfterImageApply.cmd / FactoryAfterImageApply.cmd
-the `for %%c in (*.cer)` loop must skip non-DigiCert files (or be narrowed to DigiCert only).
+Action: in all 6 exes, comment out every `Import-Certificate` / `InstallCert` / `RemoveCert` call.
+Certificate imports are unnecessary: Windows 10 includes DigiCert roots by default
+via Microsoft Root Certificate Program (KB931125 / Windows Update), and CMIT/government
+CA certs are removed for privacy.
