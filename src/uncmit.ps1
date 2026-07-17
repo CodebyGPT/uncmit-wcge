@@ -10,8 +10,8 @@
 #
 # No Chinese characters in this file by design (ASCII-only UI strings).
 
-using namespace System.Windows.Forms
-using namespace System.Drawing
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
 
 Set-StrictMode -Version Latest
 
@@ -19,13 +19,13 @@ Set-StrictMode -Version Latest
 # Must run in PowerShell 7 and as Administrator (dism requires elevation)
 # ---------------------------------------------------------------------------
 if ($PSVersionTable.PSVersion.Major -lt 7) {
-    [MessageBox]::Show("PowerShell 7 or newer is required. Current version: $($PSVersionTable.PSVersion).", "Error", "OK", "Error")
+    [System.Windows.Forms.MessageBox]::Show("PowerShell 7 or newer is required. Current version: $($PSVersionTable.PSVersion).", "Error", "OK", "Error")
     exit 1
 }
 
 $principal = [Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent())
 if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    [MessageBox]::Show("This script must be run as Administrator (dism requires elevation). Right-click and 'Run with PowerShell' as admin.", "Error", "OK", "Error")
+    [System.Windows.Forms.MessageBox]::Show("This script must be run as Administrator (dism requires elevation). Right-click and 'Run with PowerShell' as admin.", "Error", "OK", "Error")
     exit 1
 }
 
@@ -34,12 +34,15 @@ if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administra
 # Source = de-CMIT builds. Prefer a local dist\ folder (offline/dev use); if
 # absent, auto-download from the project's GitHub raw URL at runtime.
 # ---------------------------------------------------------------------------
-$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+# When run via `irm ... | iex`, $MyInvocation.MyCommand.Definition is empty.
+# Treat empty/absent script dir as "no local dist\" -> download at runtime.
+$ScriptDef = $MyInvocation.MyCommand.Definition
+$ScriptDir = if ($ScriptDef) { Split-Path -Parent $ScriptDef } else { "" }
 $RemoteBase = "https://raw.githubusercontent.com/CodebyGPT/uncmit-wcge/master/dist"
 
-if (Test-Path (Join-Path $ScriptDir "dist")) {
+if ($ScriptDir -and (Test-Path (Join-Path $ScriptDir "dist"))) {
     $DistDir = Join-Path $ScriptDir "dist"
-} elseif (Test-Path (Join-Path $ScriptDir "..\dist")) {
+} elseif ($ScriptDir -and (Test-Path (Join-Path $ScriptDir "..\dist"))) {
     $DistDir = Resolve-Path (Join-Path $ScriptDir "..\dist")
 } else {
     # No local dist\: download on the fly into a temp folder.
@@ -76,47 +79,47 @@ $ReplaceMap = @(
 # ---------------------------------------------------------------------------
 # GUI
 # ---------------------------------------------------------------------------
-$form = [Form]::new()
+$form = [System.Windows.Forms.Form]::new()
 $form.Text = "uncmit - Strip CMIT components from install.wim"
-$form.Size = [Size]::new(640, 420)
+$form.Size = [System.Drawing.Size]::new(640, 420)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedDialog"
 $form.MaximizeBox = $false
 
-$lblWim = [Label]::new()
-$lblWim.Location = [Point]::new(12, 15)
-$lblWim.Size = [Size]::new(80, 20)
+$lblWim = [System.Windows.Forms.Label]::new()
+$lblWim.Location = [System.Drawing.Point]::new(12, 15)
+$lblWim.Size = [System.Drawing.Size]::new(80, 20)
 $lblWim.Text = "install.wim:"
 $form.Controls.Add($lblWim)
 
-$txtWim = [TextBox]::new()
-$txtWim.Location = [Point]::new(100, 12)
-$txtWim.Size = [Size]::new(420, 20)
+$txtWim = [System.Windows.Forms.TextBox]::new()
+$txtWim.Location = [System.Drawing.Point]::new(100, 12)
+$txtWim.Size = [System.Drawing.Size]::new(420, 20)
 $txtWim.ReadOnly = $true
 $form.Controls.Add($txtWim)
 
-$btnBrowse = [Button]::new()
-$btnBrowse.Location = [Point]::new(530, 10)
-$btnBrowse.Size = [Size]::new(90, 23)
+$btnBrowse = [System.Windows.Forms.Button]::new()
+$btnBrowse.Location = [System.Drawing.Point]::new(530, 10)
+$btnBrowse.Size = [System.Drawing.Size]::new(90, 23)
 $btnBrowse.Text = "Browse..."
 $form.Controls.Add($btnBrowse)
 
-$btnRun = [Button]::new()
-$btnRun.Location = [Point]::new(530, 40)
-$btnRun.Size = [Size]::new(90, 28)
+$btnRun = [System.Windows.Forms.Button]::new()
+$btnRun.Location = [System.Drawing.Point]::new(530, 40)
+$btnRun.Size = [System.Drawing.Size]::new(90, 28)
 $btnRun.Text = "Run"
 $btnRun.Enabled = $false
 $form.Controls.Add($btnRun)
 
-$logBox = [TextBox]::new()
-$logBox.Location = [Point]::new(12, 80)
+$logBox = [System.Windows.Forms.TextBox]::new()
+$logBox.Location = [System.Drawing.Point]::new(12, 80)
 $logBox.Size = [Size]::new(608, 300)
 $logBox.Multiline = $true
 $logBox.ScrollBars = "Vertical"
 $logBox.ReadOnly = $true
-$logBox.BackColor = [Color]::Black
-$logBox.ForeColor = [Color]::LightGreen
-$logBox.Font = [Font]::new("Consolas", 9)
+$logBox.BackColor = [System.Drawing.Color]::Black
+$logBox.ForeColor = [System.Drawing.Color]::LightGreen
+$logBox.Font = [System.Drawing.Font]::new("Consolas", 9)
 $form.Controls.Add($logBox)
 
 # ---------------------------------------------------------------------------
@@ -128,7 +131,7 @@ function Log($msg) {
     $ts = Get-Date -Format "HH:mm:ss"
     $logBox.AppendText("[$ts] $msg`r`n")
     $logBox.ScrollToCaret()
-    [Application]::DoEvents()
+    [System.Windows.Forms.Application]::DoEvents()
 }
 
 function Find-Dism {
@@ -198,7 +201,7 @@ function Discard-Wim($dir) {
 # Events
 # ---------------------------------------------------------------------------
 $btnBrowse.Add_Click({
-    $dlg = [OpenFileDialog]::new()
+    $dlg = [System.Windows.Forms.OpenFileDialog]::new()
     $dlg.Filter = "WIM image (*.wim)|*.wim|All files (*.*)|*.*"
     $dlg.Title = "Select original install.wim"
     if ($dlg.ShowDialog() -eq "OK") {
@@ -257,5 +260,5 @@ $btnRun.Add_Click({
     }
 })
 
-[Application]::EnableVisualStyles()
-[Application]::Run($form)
+[System.Windows.Forms.Application]::EnableVisualStyles()
+[System.Windows.Forms.Application]::Run($form)
