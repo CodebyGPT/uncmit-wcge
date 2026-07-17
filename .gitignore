@@ -1,0 +1,6 @@
+# 本地工作目录
+repo/
+# Reasonix 配置
+.reasonix/
+# 临时提取目录
+tmp_extract/

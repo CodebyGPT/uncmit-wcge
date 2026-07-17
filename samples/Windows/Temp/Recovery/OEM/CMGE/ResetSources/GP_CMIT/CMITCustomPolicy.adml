@@ -1,0 +1,70 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>CMGE安全策略</displayName>
+  <description>CMGE安全策略设置</description>
+  <resources>
+    <stringTable>
+      <string id="SUPPORTED_Windows10">Windows 10 or Windows Server 2016</string>
+      <string id="CMGECP">CMGE安全策略</string>
+	  <string id="LWPLRCBAMLL">允许网站通过访问用户的语言列表提供与本地相关的内容</string>
+      <string id="LWPLRCBAMLL_Help">允许网站通过访问用户的语言列表提供与本地相关的内容：
+如果禁用此策略设置，相应的界面设置将被关闭，因此不会向Microsoft发送任何与此相关的数据。
+
+如果启用或不配置此策略设置，Windows将通过访问用户的语言列表提供与本地相关的内容，用户可能会看到发送数据到微软。
+      </string>
+      <string id="MessagingCloudSync">云同步消息传递</string>
+      <string id="MessagingCloudSync_Help">云同步消息传递：
+选择禁用此策略设置，不会发送数据。
+默认设置为启用。
+      </string>
+      <string id="TurnOffMaliciousSoftwareReporting">关闭Windows Defender通知</string>
+      <string id="TurnOffMaliciousSoftwareReporting_Help">关闭Windows Defender通知：
+如果禁用或不配置此策略设置，Windows Defender将发送带有关于设备健康和安全关键信息的通知。
+  
+如果启用此策略设置，Windows Defender将不发送带有关于设备健康和安全关键信息的通知。
+      </string>
+      <string id="BlockOneDriveNetworkActivityUntilUserSignIn">在用户登录到OneDrive之前，禁止OneDrive产生网络流量</string>
+      <string id="BlockOneDriveNetworkActivityUntilUserSignIn_help">如果希望禁止OneDrive同步客户端(OneDrive.exe)产生网络流量(检查更新等)，直到用户登录到OneDrive或开始将文件同步到本地计算机为止，请启用此策略设置。
+
+如果启用此策略设置，用户必须登录到本地计算机上的OneDrive同步客户端，或者选择在计算机上同步OneDrive或SharePoint文件，才能使同步客户端自动启动。
+
+如果没有启用此策略设置，OneDrive同步客户端将在用户登录到Windows时自动启动。
+
+如果启用或禁用此策略设置，请不要将该设置返回到未配置。这样做不会更改配置，最后配置的设置仍然有效。
+	  </string>
+      <string id="Pol_WHMCP_EanbleTrackProgramsInStart">在开始菜单中启用跟踪程序</string>
+      <string id="Pol_WHMCP_EanbleTrackProgramsInStart_Help">在开始菜单和任务栏中启用跟踪程序:
+如果启用或不配置此策略设置，Windows将会跟踪应用程序的启动，以改善启动和搜索结果。
+
+如果禁用此策略设置，Windows将不会跟踪应用程序的启动，以改善启动和搜索结果。
+      </string>
+      <string id="Pol_WHMCP_EnableWebContentEvaluation">启用网页内容评估</string>
+      <string id="Pol_WHMCP_EnableWebContentEvaluation_Help">打开SmartScreen过滤器，检查Windows商店应用程序使用的网页内容(URLs)。
+选择禁用此策略设置，不会发送数据。
+默认设置为启用。
+	  </string>
+	  <string id="AdvertisingInfo">关闭允许应用使用广告 ID</string>
+      <string id="AdvertisingInfo_Help">关闭允许应用使用广告 ID，让广告根据您的应用使用情况变得更有趣（关闭此选项将重置您的 ID）。
+	  </string>
+	  <string id="TailoredExperiencesWithDiagnosticDataEnabled">禁用量身定制体验相关数据发送</string>
+      <string id="TailoredExperiencesWithDiagnosticDataEnabled_Help">禁用量身定制体验相关数据发送。
+	  </string>
+	  <string id="DelayLockInterval">唤醒计算机需要密码延时</string>
+      <string id="DelayLockInterval_Help">此策略设置指定系统进入睡眠状态多长时间后，当恢复时需要提示用户输入密码。
+	  </string>
+	  <string id="DisableFeedback">禁止向 Microsoft 发送诊断数据</string>
+      <string id="DisableFeedback_Help">可以选择是否将诊断数据发送到 Microsoft。
+	  </string>
+	  <string id="TurnoffInkingTypingDataCollection">关闭墨迹书写和键入数据收集</string>
+      <string id="TurnoffInkingTypingDataCollection_Help">关闭墨迹书写和键入数据收集。
+	  </string>
+    </stringTable>
+	<presentationTable>
+      <presentation id="StandbyDelayLockInterval">
+        <decimalTextBox refId="StandbyDelayLockIntervalTime">唤醒计算机需要密码延时(秒):</decimalTextBox>
+      </presentation>
+	</presentationTable>
+  </resources>
+</policyDefinitionResources>
+
+
+    
