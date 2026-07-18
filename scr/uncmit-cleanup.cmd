@@ -203,6 +203,28 @@ if !_cdp_need! equ 1 (
     call :log_skip "CDPSvc/CDPUserSvc already disabled"
 )
 
+echo.
+echo === SECTION 6: WPBT (Windows Platform Binary Table) ===
+echo.
+rem Check if WPBT execution is already disabled
+reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v DisableWpbtExecution >nul 2>nul
+if !errorlevel! neq 0 (
+    echo [DETECT] WPBT execution is not disabled.
+    echo.
+    echo WPBT allows system firmware to force a binary to run at every boot.
+    echo Disabling it prevents potential firmware-level persistence.
+    echo.
+    set /p _wpbt_choice="Disable WPBT execution? [y/N]: "
+    if /i "!_wpbt_choice!"=="y" (
+        reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v DisableWpbtExecution /t REG_DWORD /d 1 /f >nul 2>nul
+        if !errorlevel! equ 0 (call :log_ok "WPBT execution disabled") else call :log_warn "Failed to disable WPBT execution"
+    ) else (
+        call :log_skip "WPBT execution kept"
+    )
+) else (
+    call :log_skip "WPBT execution already disabled"
+)
+
 :: ===== Summary =====
 echo.
 echo ========================================
