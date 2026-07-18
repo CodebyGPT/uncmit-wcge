@@ -969,27 +969,27 @@ del "$env:SystemDrive\Program Files\CMITOfflineUpdateInstaller" -recurse -Force 
 # Start-Process -WindowStyle Hidden -FilePath "$ScATExe" -ArgumentList "$ScATCfg" -Verb runas -Wait
 
 # Register dlls of SMx
-$SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstSM2ECESConfig.exe"
-$SMxCfg="-register"
-Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
-$SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstSM2ECDSAConfig.exe"
-$SMxCfg="-register"
-Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
-$SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstKSPConfig.exe"
-$SMxCfg="-register"
-Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
-$SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstSM3Config.exe"
-$SMxCfg="-register"
-Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
-$SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstSM4Config.exe"
-$SMxCfg="-register"
-Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
-$SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstRngConfig.exe"
-$SMxCfg="-register"
-Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
-$SMxExe="cmd.exe"
-$SMxCfg="/c `"$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstKSPConfig.exe -enum`" >> $logCMD"
-Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
+# UNCMIT-DISABLED $SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstSM2ECESConfig.exe"
+# UNCMIT-DISABLED $SMxCfg="-register"
+# UNCMIT-DISABLED Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
+# UNCMIT-DISABLED $SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstSM2ECDSAConfig.exe"
+# UNCMIT-DISABLED $SMxCfg="-register"
+# UNCMIT-DISABLED Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
+# UNCMIT-DISABLED $SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstKSPConfig.exe"
+# UNCMIT-DISABLED $SMxCfg="-register"
+# UNCMIT-DISABLED Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
+# UNCMIT-DISABLED $SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstSM3Config.exe"
+# UNCMIT-DISABLED $SMxCfg="-register"
+# UNCMIT-DISABLED Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
+# UNCMIT-DISABLED $SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstSM4Config.exe"
+# UNCMIT-DISABLED $SMxCfg="-register"
+# UNCMIT-DISABLED Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
+# UNCMIT-DISABLED $SMxExe="$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstRngConfig.exe"
+# UNCMIT-DISABLED $SMxCfg="-register"
+# UNCMIT-DISABLED Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
+# UNCMIT-DISABLED $SMxExe="cmd.exe"
+# UNCMIT-DISABLED $SMxCfg="/c `"$env:windir\Temp\Recovery\OEM\CMGE\ResetSources\CMITSMx\win32\WstKSPConfig.exe -enum`" >> $logCMD"
+# UNCMIT-DISABLED Start-Process -WindowStyle Hidden -FilePath "$SMxExe" -ArgumentList "$SMxCfg" -Verb runas -Wait
 
 
 
@@ -1010,15 +1010,15 @@ del "$env:Public\GSKU_HKCU" -recurse -Force
 
 
 # Create a Shortcut for CMIT Update Agent
-New-Item "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\更新客户端" -type Directory
-$TargetFile = "$env:SystemDrive\Program Files\CmitUpdateAgent\CMOS-UA_ConfigurationTool.exe"
-$ShortcutFile = "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\更新客户端\更新客户端.lnk"
-$WorkingDir = "$env:SystemDrive\Program Files\CmitUpdateAgent"
-$WScriptShell = New-Object -ComObject WScript.Shell
-$Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
-$Shortcut.TargetPath = $TargetFile
-$Shortcut.WorkingDirectory = $WorkingDir
-$Shortcut.Save()
+# UNCMIT-DISABLED New-Item "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\更新客户端" -type Directory
+# UNCMIT-DISABLED $TargetFile = "$env:SystemDrive\Program Files\CmitUpdateAgent\CMOS-UA_ConfigurationTool.exe"
+# UNCMIT-DISABLED $ShortcutFile = "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\更新客户端\更新客户端.lnk"
+# UNCMIT-DISABLED $WorkingDir = "$env:SystemDrive\Program Files\CmitUpdateAgent"
+# UNCMIT-DISABLED $WScriptShell = New-Object -ComObject WScript.Shell
+# UNCMIT-DISABLED $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+# UNCMIT-DISABLED $Shortcut.TargetPath = $TargetFile
+# UNCMIT-DISABLED $Shortcut.WorkingDirectory = $WorkingDir
+# UNCMIT-DISABLED $Shortcut.Save()
 
 # Install service for CMIT Update Agent
 # UNCMIT-DISABLED $CUAExe="$env:SystemDrive\Program Files\CmitUpdateAgent\CmitUpdateAgent.exe"
@@ -1052,24 +1052,24 @@ Disable-ScheduledTask -TaskName "\Microsoft\Windows\InstallService\ScanForUpdate
 
 
 #Create two Shortcuts for CMITControlCenter
-New-Item "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\CMGE控制中心" -type Directory
-$TargetFile = "$env:SystemDrive\Program Files\CMITControlCenter\ControlCenter.exe"
-$ShortcutFile = "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\CMGE控制中心\控制中心.lnk"
-$WorkingDir = "$env:SystemDrive\Program Files\CMITControlCenter"
-$WScriptShell = New-Object -ComObject WScript.Shell
-$Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
-$Shortcut.TargetPath = $TargetFile
-$Shortcut.WorkingDirectory = $WorkingDir
-$Shortcut.Save()
+# UNCMIT-DISABLED New-Item "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\CMGE控制中心" -type Directory
+# UNCMIT-DISABLED $TargetFile = "$env:SystemDrive\Program Files\CMITControlCenter\ControlCenter.exe"
+# UNCMIT-DISABLED $ShortcutFile = "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\CMGE控制中心\控制中心.lnk"
+# UNCMIT-DISABLED $WorkingDir = "$env:SystemDrive\Program Files\CMITControlCenter"
+# UNCMIT-DISABLED $WScriptShell = New-Object -ComObject WScript.Shell
+# UNCMIT-DISABLED $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+# UNCMIT-DISABLED $Shortcut.TargetPath = $TargetFile
+# UNCMIT-DISABLED $Shortcut.WorkingDirectory = $WorkingDir
+# UNCMIT-DISABLED $Shortcut.Save()
 
-$TargetFile = "$env:SystemDrive\Program Files\CMITControlCenter\ControlCenter.exe"
-$ShortcutFile = "$env:Public\Desktop\控制中心.lnk"
-$WorkingDir = "$env:SystemDrive\Program Files\CMITControlCenter"
-$WScriptShell = New-Object -ComObject WScript.Shell
-$Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
-$Shortcut.TargetPath = $TargetFile
-$Shortcut.WorkingDirectory = $WorkingDir
-$Shortcut.Save()
+# UNCMIT-DISABLED $TargetFile = "$env:SystemDrive\Program Files\CMITControlCenter\ControlCenter.exe"
+# UNCMIT-DISABLED $ShortcutFile = "$env:Public\Desktop\控制中心.lnk"
+# UNCMIT-DISABLED $WorkingDir = "$env:SystemDrive\Program Files\CMITControlCenter"
+# UNCMIT-DISABLED $WScriptShell = New-Object -ComObject WScript.Shell
+# UNCMIT-DISABLED $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+# UNCMIT-DISABLED $Shortcut.TargetPath = $TargetFile
+# UNCMIT-DISABLED $Shortcut.WorkingDirectory = $WorkingDir
+# UNCMIT-DISABLED $Shortcut.Save()
 
 $ScATExe = "cmd.exe"
 $ScATCfg = "/c `"sc.exe stop wlidsvc`" >> $logCMD"
