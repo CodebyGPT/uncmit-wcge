@@ -1,6 +1,6 @@
 # Windows .cmd Batch Script Lessons Learned
 
-Derived from developing `src/uncmit-cleanup.cmd`.
+Derived from developing `scr/uncmit-cleanup.cmd`.
 
 ## Key Pitfalls
 

@@ -7,7 +7,7 @@ uncmit-wcge/
 │
 ├── build/                    # PowerShell source scripts (.ps1) for deployment EXEs
 ├── dist/                     # Compiled EXEs (gitignored; rebuilt locally)
-├── src/                      # Supporting scripts
+├── scr/                      # Supporting scripts
 │   └── uncmit-cleanup.cmd    # Post-reverse cleanup script
 ├── reverse/                  # Reverse engineering analysis of CMIT binaries
 │   ├── ilspy/                # ILSpy decompilation output (.NET assemblies)
