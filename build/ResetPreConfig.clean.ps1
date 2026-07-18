@@ -612,7 +612,7 @@ Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Na
 Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" -Name "Source Han Sans CN (TrueType)" -Value "SourceHanSansCN-Regular.otf" -PropertyType "String"
 
 #Configure KMS Host Server registry value
-Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" -Name "KeyManagementServiceName" -Value "KMS.cmgos.com" -PropertyType "String"
+# UNCMIT-DISABLED Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" -Name "KeyManagementServiceName" -Value "KMS.cmgos.com" -PropertyType "String"
 
 #settings-win.data.microsoft.com
 Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name  "DisableOneSettingsDownloads" -Value 1 -PropertyType "DWord"
