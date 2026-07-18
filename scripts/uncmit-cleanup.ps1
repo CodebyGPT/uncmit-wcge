@@ -3,8 +3,7 @@
 #
 # Run AFTER installing a uncmit‑patched wcge (Windows 10 神州网信政府版) image.
 # This script surgically removes CMIT closed‑source binaries, certificates,
-# services, scheduled tasks, and registry entries that may remain on disk
-# as dead payload files.
+# and registry entries that may remain on disk as dead payload files.
 #
 # SAFEGUARDED: harmless CMIT customizations are NEVER touched:
 #   • LGPO local group policies (privacy, telemetry, update blocking)
@@ -57,71 +56,9 @@ if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administra
 }
 
 # ---------------------------------------------------------------------------
-# SECTION 1 — Stop and remove CMIT services
+# SECTION 1 — Remove CMIT directories from Program Files
 # ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 1: CMIT Services ===" -ForegroundColor Green
-
-$cmitServices = @("CmitClientSVC", "CmitUpdateAgent")
-foreach ($svc in $cmitServices) {
-    try {
-        $s = Get-Service -Name $svc -ErrorAction SilentlyContinue
-        if ($s) {
-            if ($s.Status -eq "Running") {
-                Stop-Service -Name $svc -Force -ErrorAction SilentlyContinue
-                Start-Sleep -Milliseconds 500
-            }
-            # Remove using sc.exe for clean unregister
-            & sc.exe delete $svc 2>&1 | Out-Null
-            # Also remove registry service key as fallback
-            $svcKey = "HKLM:\SYSTEM\CurrentControlSet\services\$svc"
-            if (Test-Path $svcKey) {
-                Remove-Item -Path $svcKey -Recurse -Force -ErrorAction SilentlyContinue
-            }
-            LogOK "Removed service: $svc"
-        } else {
-            LogSkip "Service not found: $svc"
-        }
-    } catch {
-        LogWarn "Could not remove service $svc : $_"
-    }
-}
-
-# ---------------------------------------------------------------------------
-# SECTION 2 — Remove CMIT scheduled tasks
-# ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 2: CMIT Scheduled Tasks ===" -ForegroundColor Green
-
-$cmitTasks = @(
-    @{TaskPath = "\CMIT\CmitUpdateAgent\"; TaskName = "CmitUpdateAgent Daily Runner"}
-)
-foreach ($t in $cmitTasks) {
-    try {
-        $fullName = $t.TaskPath + $t.TaskName
-        $existing = Get-ScheduledTask -TaskPath $t.TaskPath -TaskName $t.TaskName -ErrorAction SilentlyContinue
-        if ($existing) {
-            Unregister-ScheduledTask -TaskName $t.TaskName -TaskPath $t.TaskPath -Confirm:$false -ErrorAction SilentlyContinue
-            LogOK "Removed scheduled task: $fullName"
-        } else {
-            LogSkip "Scheduled task not found: $fullName"
-        }
-    } catch {
-        LogWarn "Could not remove scheduled task $($t.TaskName) : $_"
-    }
-}
-
-# Also remove the \CMIT\ folder if empty after task removal
-try {
-    $cmitFolder = Get-ScheduledTask -TaskPath "\CMIT\" -ErrorAction SilentlyContinue
-    if (-not $cmitFolder) {
-        # Folder exists but empty — schtasks.exe /delete for the folder
-        & schtasks.exe /Delete /TN "\CMIT\CmitUpdateAgent" /F 2>&1 | Out-Null
-    }
-} catch {}
-
-# ---------------------------------------------------------------------------
-# SECTION 3 — Remove CMIT directories from Program Files
-# ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 3: CMIT Program Files ===" -ForegroundColor Green
+Write-Host "`n=== SECTION 1: CMIT Program Files ===" -ForegroundColor Green
 
 $pfDirs = @(
     "$env:SystemDrive\Program Files\CMITActivation",
@@ -159,10 +96,10 @@ foreach ($d in $pfDirs) {
 }
 
 # ---------------------------------------------------------------------------
-# SECTION 4 — Remove CMIT payload from Recovery partition
+# SECTION 2 — Remove CMIT payload from Recovery partition
 #            (Keep: LGPO\, logo.bmp, LayoutModification.xml, ResetPre/Post*.exe)
 # ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 4: CMIT Recovery/Reset Payload ===" -ForegroundColor Green
+Write-Host "`n=== SECTION 2: CMIT Recovery/Reset Payload ===" -ForegroundColor Green
 
 $recoveryBase = "$env:SystemDrive\Recovery\OEM\CMGE\ResetSources"
 
@@ -246,9 +183,9 @@ foreach ($td in $tempDeploy) {
 }
 
 # ---------------------------------------------------------------------------
-# SECTION 5 — Remove CMIT certificates from system cert stores
+# SECTION 3 — Remove CMIT certificates from system cert stores
 # ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 5: CMIT Certificates ===" -ForegroundColor Green
+Write-Host "`n=== SECTION 3: CMIT Certificates ===" -ForegroundColor Green
 
 $certTargets = @(
     # CMIT certificates (backdoor — always remove)
@@ -326,9 +263,9 @@ foreach ($ct in $certTargets) {
 LogSkip "DigiCert certificates preserved (shipped by Windows natively)"
 
 # ---------------------------------------------------------------------------
-# SECTION 6 — Remove CMIT deployment exe leftovers in Temp
+# SECTION 4 — Remove CMIT deployment exe leftovers in Temp
 # ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 6: Temp Deployment Files ===" -ForegroundColor Green
+Write-Host "`n=== SECTION 4: Temp Deployment Files ===" -ForegroundColor Green
 
 $tempFiles = @(
     "$env:windir\Temp\UpgradeConfig.exe",
@@ -372,4 +309,4 @@ if ($warn -gt 0) {
 }
 Write-Host "========================================" -ForegroundColor Cyan
 
-Write-Host "`nReboot recommended to finalize service/task changes.`n" -ForegroundColor Gray
+Write-Host "`nReboot recommended to finalize changes.`n" -ForegroundColor Gray
