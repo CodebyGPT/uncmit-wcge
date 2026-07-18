@@ -327,78 +327,9 @@ foreach ($ct in $certTargets) {
 LogSkip "DigiCert certificates preserved (shipped by Windows natively)"
 
 # ---------------------------------------------------------------------------
-# SECTION 6 — Remove CMIT registry remnants
+# SECTION 6 — Remove CMIT shortcuts
 # ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 6: CMIT Registry Remnants ===" -ForegroundColor Green
-
-$regEntries = @(
-    # ClipSVC activation redirect
-    @{Path = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ClipSVC";
-      Name = "AltActivationClient"; Note = "ClipSVC → CmitClient redirect"},
-    # DelayedAutostart for CmitClientSVC (if service key still exists)
-    @{Path = "HKLM:\SYSTEM\CurrentControlSet\services\CmitClientSVC";
-      Name = "DelayedAutostart"; Note = "CmitClientSVC delayed autostart"},
-    # CMIT MSI uninstall GUIDs (old activation tool versions)
-    @{Path = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{61F90E65-243E-4FDB-9D44-E25D5C310F6F}";
-      Name = $null; Note = "CMIT activation GUID 1"},
-    @{Path = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{7D68C596-8427-4298-A288-7370D84C0F7A}";
-      Name = $null; Note = "CMIT activation GUID 2"},
-    @{Path = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{17A2CCB1-99E3-42D2-8085-43E05816C681}";
-      Name = $null; Note = "CMIT activation GUID 3"},
-    @{Path = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{6E2FB2CF-C8B2-47FC-846B-033BE3B81901}";
-      Name = $null; Note = "CMIT activation GUID 4"}
-)
-
-foreach ($re in $regEntries) {
-    try {
-        if ($re.Name) {
-            # Remove a specific value
-            if (Test-Path $re.Path) {
-                $existing = Get-ItemProperty -Path $re.Path -Name $re.Name -ErrorAction SilentlyContinue
-                if ($existing -ne $null) {
-                    Remove-ItemProperty -Path $re.Path -Name $re.Name -Force -ErrorAction SilentlyContinue
-                    LogOK "Removed registry value: $($re.Path)\$($re.Name) ($($re.Note))"
-                } else {
-                    LogSkip "Registry value not found: $($re.Path)\$($re.Name)"
-                }
-            } else {
-                LogSkip "Registry path not found: $($re.Path)"
-            }
-        } else {
-            # Remove an entire key
-            if (Test-Path $re.Path) {
-                Remove-Item -Path $re.Path -Recurse -Force -ErrorAction SilentlyContinue
-                LogOK "Removed registry key: $($re.Path) ($($re.Note))"
-            } else {
-                LogSkip "Registry key not found: $($re.Path)"
-            }
-        }
-    } catch {
-        LogWarn "Could not remove registry $($re.Path) : $_"
-    }
-}
-
-# ---------------------------------------------------------------------------
-# SECTION 7 — Remove CMIT KeyHolder from ClipSVC
-# ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 7: CMIT KeyHolder ===" -ForegroundColor Green
-
-$keyHolder = "$env:SystemDrive\ProgramData\Microsoft\Windows\ClipSVC\Install\KeyHolder"
-try {
-    if (Test-Path $keyHolder) {
-        Remove-Item -Path $keyHolder -Recurse -Force -ErrorAction SilentlyContinue
-        LogOK "Removed KeyHolder: $keyHolder"
-    } else {
-        LogSkip "KeyHolder not found"
-    }
-} catch {
-    LogWarn "Could not remove KeyHolder : $_"
-}
-
-# ---------------------------------------------------------------------------
-# SECTION 8 — Remove CMIT shortcuts
-# ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 8: CMIT Shortcuts ===" -ForegroundColor Green
+Write-Host "`n=== SECTION 6: CMIT Shortcuts ===" -ForegroundColor Green
 
 $shortcuts = @(
     "$env:Public\Desktop\控制中心.lnk",
@@ -423,9 +354,9 @@ foreach ($s in $shortcuts) {
 }
 
 # ---------------------------------------------------------------------------
-# SECTION 9 — Remove CMIT deployment exe leftovers in Temp
+# SECTION 7 — Remove CMIT deployment exe leftovers in Temp
 # ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 9: Temp Deployment Files ===" -ForegroundColor Green
+Write-Host "`n=== SECTION 7: Temp Deployment Files ===" -ForegroundColor Green
 
 $tempFiles = @(
     "$env:windir\Temp\UpgradeConfig.exe",
@@ -458,9 +389,9 @@ try {
 } catch {}
 
 # ---------------------------------------------------------------------------
-# SECTION 10 — Cleanup CMIT SiPolicy (if left from original install)
+# SECTION 8 — Cleanup CMIT SiPolicy (if left from original install)
 # ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 10: CMIT Code Integrity Policy ===" -ForegroundColor Green
+Write-Host "`n=== SECTION 8: CMIT Code Integrity Policy ===" -ForegroundColor Green
 
 $siPolicy = "C:\SiPolicy"
 try {
