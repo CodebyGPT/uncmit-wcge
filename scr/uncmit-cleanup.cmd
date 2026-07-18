@@ -64,16 +64,6 @@ if exist "%~1" (
 ) else call :log_skip "%~2 -- not found"
 exit /b 0
 
-:: ---- Delete certificate from store ----
-::   %1 = subject filter   %2 = primary store   %3 = fallback store (or "")
-:rm_cert
-echo Y 2>nul | certutil -delstore "%2" "%~1" >nul 2>nul
-if errorlevel 1 if not "%3"=="" (
-    echo Y 2>nul | certutil -delstore "%3" "%~1" >nul 2>nul
-)
-if errorlevel 1 (call :log_skip "Certificate not found: %~1") else call :log_ok "Removed certificate: %~1"
-exit /b 0
-
 :: =====================================================
 :: Main
 :: =====================================================
@@ -117,36 +107,8 @@ call :rm_dir "%windir%\Temp\CMITActivation"         "Temp\CMITActivation"
 call :rm_dir "%windir%\Temp\CMITControlCenter"      "Temp\CMITControlCenter"
 call :rm_dir "%windir%\Temp\CmitUpdateAgent"        "Temp\CmitUpdateAgent"
 
-echo.
-echo === SECTION 3: CMIT Certificates ===
 
-:: CMIT backdoor certificates
-call :rm_cert "CMIT Root Authority"    Root              CA
-call :rm_cert "CMIT SubP"             CA                Root
-call :rm_cert "CMIT signature"        TrustedPublisher  ""
-
-:: Government / industry CA certificates
-call :rm_cert "Beijing ROOT CA"       Root              CA
-call :rm_cert "BeiJing ROOT CA New"   Root              CA
-call :rm_cert "Beijing GCA"           Root              CA
-call :rm_cert "Beijing GCA New"       CA                Root
-call :rm_cert "BJCA"                  Root              CA
-call :rm_cert "BJCA New"              CA                Root
-call :rm_cert "CEGN_RCA"              Root              CA
-call :rm_cert "CEGN_OCA"              Root              CA
-call :rm_cert "GDCA_ROOT_CA"          Root              ""
-call :rm_cert "GDCA_Guangdong"        Root              ""
-call :rm_cert "GDCA Guangdong"        Root              ""
-call :rm_cert "SHECA"                 Root              ""
-call :rm_cert "UCA Root"              Root              ""
-call :rm_cert "UCA ROOT"              Root              ""
-call :rm_cert "OSCCA"                 Root              ""
-call :rm_cert "ROOTCA"                Root              ""
-
-call :log_skip "DigiCert certificates preserved (shipped by Windows natively)"
-
-echo.
-echo === SECTION 4: Temp Deployment Files ===
+echo === SECTION 3: Temp Deployment Files ===
 
 call :rm_file "%windir%\Temp\UpgradeConfig.exe"         "Temp\UpgradeConfig.exe"
 call :rm_file "%windir%\Temp\UpgradeSchdTask.exe"       "Temp\UpgradeSchdTask.exe"
