@@ -22,9 +22,7 @@ set warn=0
 
 goto :main
 
-:: =====================================================
-:: Subroutines
-:: =====================================================
+:: ---- Subroutines ----
 
 :log_ok
 set /a ok+=1
@@ -40,18 +38,13 @@ exit /b 0
 echo [SKIP] %*
 exit /b 0
 
-:: ---- Delete directory tree ----
-::   %1 = full path    %2 = display label
 :rm_dir
 if exist "%~1" (
     rmdir /s /q "%~1" 2>nul
-    if exist "%~1" (call :log_warn "%~2 -- could not remove")
-             else call :log_ok "%~2"
+    if exist "%~1" (call :log_warn "%~2 -- could not remove") else call :log_ok "%~2"
 ) else call :log_skip "%~2 -- not found"
 exit /b 0
 
-:: ---- Delete single file ----
-::   %1 = full path    %2 = display label
 :rm_file
 if exist "%~1" (
     del /f /q "%~1" 2>nul

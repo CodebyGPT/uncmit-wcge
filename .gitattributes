@@ -1,0 +1,3 @@
+# Windows batch files: store CRLF in git blob so GitHub raw download works
+# (cmd.exe requires CRLF; -text prevents git from normalizing to LF)
+*.cmd -text
