@@ -118,18 +118,18 @@ if exist "%windir%\Setup\Scripts" (
 echo.
 echo === SECTION 4: GDCA Certificate Cleanup ===
 echo.
-rem Check if GDCA certificates exist in certificate store
-rem (originally imported by CKB2024103103 or other sources)
+rem Check if GDCA certificates exist by dumping store and searching text
+rem (certutil -store "name" exit code is unreliable with Chinese locale;
+rem  findstr exit code is deterministic: 0=found, 1=not found)
 set _gdca_root=0
 set _gdca_ca1=0
 set _gdca_ca2=0
 
-certutil -store Root "GDCA ROOT CA1" >nul 2>nul
-if !errorlevel! equ 0 set _gdca_root=1
-certutil -store CA "GDCA Public CA1" >nul 2>nul
-if !errorlevel! equ 0 set _gdca_ca1=1
-certutil -store CA "GDCA Public CA2" >nul 2>nul
-if !errorlevel! equ 0 set _gdca_ca2=1
+certutil -store Root 2>nul > "%TEMP%\uncmit_cert_root.txt"
+certutil -store CA 2>nul > "%TEMP%\uncmit_cert_ca.txt"
+findstr /C:"GDCA ROOT CA1" "%TEMP%\uncmit_cert_root.txt" >nul 2>nul && set _gdca_root=1
+findstr /C:"GDCA Public CA1" "%TEMP%\uncmit_cert_ca.txt" >nul 2>nul && set _gdca_ca1=1
+findstr /C:"GDCA Public CA2" "%TEMP%\uncmit_cert_ca.txt" >nul 2>nul && set _gdca_ca2=1
 
 set /a _gdca_total=_gdca_root+_gdca_ca1+_gdca_ca2
 
