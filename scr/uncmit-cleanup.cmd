@@ -45,13 +45,8 @@ exit /b 0
 :rm_dir
 if exist "%~1" (
     rmdir /s /q "%~1" 2>nul
-    if exist "%~1" (
-        takeown /f "%~1" /r /d Y >nul 2>&1
-        icacls "%~1" /grant Administrators:F /T /Q >nul 2>&1
-        rmdir /s /q "%~1" 2>nul
-        if exist "%~1" (call :log_warn "%~2 -- could not fully remove (files in use)")
-                 else call :log_ok "%~2"
-    ) else call :log_ok "%~2"
+    if exist "%~1" (call :log_warn "%~2 -- could not remove")
+             else call :log_ok "%~2"
 ) else call :log_skip "%~2 -- not found"
 exit /b 0
 
