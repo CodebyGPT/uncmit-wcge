@@ -43,8 +43,7 @@ function LogSkip($text) { Log "[SKIP] $text" }
 # Safety checks
 # ---------------------------------------------------------------------------
 Write-Host "=== uncmit-cleanup v1.0 ===" -ForegroundColor Cyan
-Write-Host "Surgically removing CMIT closed-source dead payload" -ForegroundColor Cyan
-Write-Host "Harmless CMIT customizations (LGPO, privacy reg keys, branding) are PRESERVED.`n" -ForegroundColor Yellow
+Write-Host "Surgically removing CMIT closed-source dead payload`n" -ForegroundColor Cyan
 
 if ($PSVersionTable.PSVersion.Major -lt 5) {
     Write-Host "ERROR: PowerShell 5.1 or newer required." -ForegroundColor Red
@@ -327,36 +326,9 @@ foreach ($ct in $certTargets) {
 LogSkip "DigiCert certificates preserved (shipped by Windows natively)"
 
 # ---------------------------------------------------------------------------
-# SECTION 6 — Remove CMIT shortcuts
+# SECTION 6 — Remove CMIT deployment exe leftovers in Temp
 # ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 6: CMIT Shortcuts ===" -ForegroundColor Green
-
-$shortcuts = @(
-    "$env:Public\Desktop\控制中心.lnk",
-    "$env:Public\Desktop\系统激活.lnk",
-    "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\更新客户端",
-    "$env:SystemDrive\ProgramData\Microsoft\Windows\Start Menu\Programs\CMGE控制中心"
-)
-
-foreach ($s in $shortcuts) {
-    try {
-        if (Test-Path $s) {
-            if ((Get-Item $s) -is [System.IO.DirectoryInfo]) {
-                Remove-Item -Path $s -Recurse -Force -ErrorAction SilentlyContinue
-            } else {
-                Remove-Item -Path $s -Force -ErrorAction SilentlyContinue
-            }
-            LogOK "Removed shortcut: $s"
-        } else {
-            LogSkip "Shortcut not found: $s"
-        }
-    } catch {}
-}
-
-# ---------------------------------------------------------------------------
-# SECTION 7 — Remove CMIT deployment exe leftovers in Temp
-# ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 7: Temp Deployment Files ===" -ForegroundColor Green
+Write-Host "`n=== SECTION 6: Temp Deployment Files ===" -ForegroundColor Green
 
 $tempFiles = @(
     "$env:windir\Temp\UpgradeConfig.exe",
@@ -389,9 +361,9 @@ try {
 } catch {}
 
 # ---------------------------------------------------------------------------
-# SECTION 8 — Cleanup CMIT SiPolicy (if left from original install)
+# SECTION 7 — Cleanup CMIT SiPolicy (if left from original install)
 # ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 8: CMIT Code Integrity Policy ===" -ForegroundColor Green
+Write-Host "`n=== SECTION 7: CMIT Code Integrity Policy ===" -ForegroundColor Green
 
 $siPolicy = "C:\SiPolicy"
 try {
@@ -416,13 +388,5 @@ if ($warn -gt 0) {
     Write-Host "  $warn warnings (see log above)" -ForegroundColor Yellow
 }
 Write-Host "========================================" -ForegroundColor Cyan
-
-Write-Host "`nHarmless CMIT customizations PRESERVED:" -ForegroundColor Yellow
-Write-Host "  • LGPO group policies (privacy, telemetry, update blocking)" -ForegroundColor Yellow
-Write-Host "  • Registry: Netlogon/wlidsvc disable, SettingsPageVisibility" -ForegroundColor Yellow
-Write-Host "  • Brand strings (神州网信政府版) and logo" -ForegroundColor Yellow
-Write-Host "  • NTP config (cn.pool.ntp.org) and KMS server address" -ForegroundColor Yellow
-Write-Host "  • Disabled Update scan tasks (ScanForUpdates)" -ForegroundColor Yellow
-Write-Host "  • Recovery LGPO assets (Reset this PC policy preservation)" -ForegroundColor Yellow
 
 Write-Host "`nReboot recommended to finalize service/task changes.`n" -ForegroundColor Gray
