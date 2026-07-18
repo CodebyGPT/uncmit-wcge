@@ -197,6 +197,45 @@ function Discard-Wim($dir) {
     & dism.exe /Unmount-Wim /MountDir:"$dir" /Discard 2>&1 | ForEach-Object { Log $_ }
 }
 
+function Set-WpbtDisabledOffline($mountDir) {
+    # Disable WPBT (Windows Platform Binary Table) execution in the offline SYSTEM hive.
+    # WPBT allows firmware to inject a binary at boot; this registry key tells
+    # smss.exe to ignore the ACPI WPBT table. Not all OEM firmware provides WPBT,
+    # but the defense is harmless if absent.
+    # Uses reg.exe rather than PS provider to avoid file-handle leaks on unload.
+    # Must target ControlSet001 (not CurrentControlSet, which is a runtime alias).
+    $hive = Join-Path $mountDir "Windows\System32\config\SYSTEM"
+    if (-not (Test-Path $hive)) {
+        Log "WARN: SYSTEM hive not found at $hive — skipping WPBT disable"
+        return $true
+    }
+    try {
+        Log "Loading offline SYSTEM hive to disable WPBT execution ..."
+        $r = & reg.exe load "HKLM\UNCMIT_WPBT" $hive 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            Log "WARN: reg load failed (exit $LASTEXITCODE) — skipping WPBT disable"
+            return $true
+        }
+        & reg.exe add "HKLM\UNCMIT_WPBT\ControlSet001\Control\Session Manager" `
+            /v DisableWpbtExecution /t REG_DWORD /d 1 /f 2>$null
+        if ($LASTEXITCODE -eq 0) {
+            Log "WPBT execution disabled in offline SYSTEM hive"
+        } else {
+            Log "WARN: failed to set DisableWpbtExecution"
+        }
+        & reg.exe unload "HKLM\UNCMIT_WPBT" 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            Log "ERROR: reg unload failed — WIM commit may fail!"
+            return $false
+        }
+        return $true
+    } catch {
+        Log "WARN: WPBT disable threw: $_"
+        & reg.exe unload "HKLM\UNCMIT_WPBT" 2>$null
+        return $true
+    }
+}
+
 # ---------------------------------------------------------------------------
 # Events
 # ---------------------------------------------------------------------------
@@ -244,6 +283,7 @@ $btnRun.Add_Click({
     try {
         if (-not (Mount-Wim $wim $mountDir)) { throw "mount failed" }
         if (-not (Replace-Exes $mountDir)) { throw "replace failed" }
+        if (-not (Set-WpbtDisabledOffline $mountDir)) { Log "WARN: WPBT disable failed, continuing..." }
         if (-not (Commit-Wim $mountDir)) { throw "commit failed" }
         Log "DONE. The selected install.wim now contains de-CMIT deployment exes."
         Log "Next: burn the modified ISO/USB with Rufus and install normally."
