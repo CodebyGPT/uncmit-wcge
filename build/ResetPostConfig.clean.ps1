@@ -546,6 +546,9 @@ Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes"
 # Disable "Turn on SmartScreenFilter". Set by CMGE Group Policy. Need to check in registry.
 #Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppHost" -Name "EnableWebContentEvaluation" -Value 0 -PropertyType "DWord"
 
+# Address issue of Personal Data Export page
+Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CloudExperienceHost\Intent\PersonalDataExport" -Name "PDEShown" -Value 1 -PropertyType "DWord"
+
 # Hide Cortana Button in taskbar
 Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowCortanaButton" -Value 0 -PropertyType "DWord"
 
