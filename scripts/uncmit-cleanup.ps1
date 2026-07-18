@@ -361,23 +361,6 @@ try {
 } catch {}
 
 # ---------------------------------------------------------------------------
-# SECTION 7 — Cleanup CMIT SiPolicy (if left from original install)
-# ---------------------------------------------------------------------------
-Write-Host "`n=== SECTION 7: CMIT Code Integrity Policy ===" -ForegroundColor Green
-
-$siPolicy = "C:\SiPolicy"
-try {
-    if (Test-Path $siPolicy) {
-        Remove-Item -Path $siPolicy -Recurse -Force -ErrorAction SilentlyContinue
-        LogOK "Removed: $siPolicy"
-    } else {
-        LogSkip "SiPolicy not found"
-    }
-} catch {
-    LogWarn "Could not remove SiPolicy : $_"
-}
-
-# ---------------------------------------------------------------------------
 # Summary
 # ---------------------------------------------------------------------------
 Write-Host "`n" -NoNewline
