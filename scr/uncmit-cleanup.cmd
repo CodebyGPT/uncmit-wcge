@@ -118,55 +118,55 @@ if exist "%windir%\Setup\Scripts" (
 echo.
 echo === SECTION 4: GDCA Certificate Cleanup ===
 echo.
-rem Check if GDCA certificates exist by dumping store and searching text
-rem (certutil -store "name" exit code is unreliable with Chinese locale;
-rem  findstr exit code is deterministic: 0=found, 1=not found)
+rem Detect GDCA certificates in Root and CA stores via for/f pipe
+rem (avoid temp files and findstr locale issues)
 set _gdca_root=0
 set _gdca_ca1=0
 set _gdca_ca2=0
 
-certutil -store Root 2>nul > "%TEMP%\uncmit_cert_root.txt"
-certutil -store CA 2>nul > "%TEMP%\uncmit_cert_ca.txt"
-findstr /C:"GDCA ROOT CA1" "%TEMP%\uncmit_cert_root.txt" >nul 2>nul && set _gdca_root=1
-findstr /C:"GDCA Public CA1" "%TEMP%\uncmit_cert_ca.txt" >nul 2>nul && set _gdca_ca1=1
-findstr /C:"GDCA Public CA2" "%TEMP%\uncmit_cert_ca.txt" >nul 2>nul && set _gdca_ca2=1
+for /f %%a in ('certutil -store Root 2^>nul ^| find "GDCA ROOT CA1"') do set _gdca_root=1
+for /f %%a in ('certutil -store CA 2^>nul ^| find "GDCA Public CA1"') do set _gdca_ca1=1
+for /f %%a in ('certutil -store CA 2^>nul ^| find "GDCA Public CA2"') do set _gdca_ca2=1
 
 set /a _gdca_total=_gdca_root+_gdca_ca1+_gdca_ca2
 
-if !_gdca_total! gtr 0 (
-    echo Found GDCA certificates in certificate store:
-    if !_gdca_root! equ 1 echo   - GDCA ROOT CA1   (Root store, Trusted Root CA)
-    if !_gdca_ca1! equ 1  echo   - GDCA Public CA1 (CA store, Intermediate CA)
-    if !_gdca_ca2! equ 1  echo   - GDCA Public CA2 (CA store, Intermediate CA)
+if !_gdca_total! equ 0 (
+    call :log_skip "No GDCA certificates found"
+    goto :after_section4
+)
+
+echo Found GDCA certificates in certificate store:
+if !_gdca_root! equ 1 echo   - GDCA ROOT CA1   (Root store, Trusted Root CA)
+if !_gdca_ca1! equ 1  echo   - GDCA Public CA1 (CA store, Intermediate CA)
+if !_gdca_ca2! equ 1  echo   - GDCA Public CA2 (CA store, Intermediate CA)
+echo.
+echo WARNING: These certificates trust the Guangdong Digital Certificate Authority (GDCA)
+echo to issue code-signing and SSL certificates. Removing them will affect
+echo software and websites that rely on GDCA-issued certificates.
+echo.
+echo If you use Chinese government online services (tax, social security, etc.),
+rem DO NOT remove these certificates.
+echo.
+set /p _gdca_choice="Remove GDCA certificates? [y/N]: "
+if /i "!_gdca_choice!"=="y" (
     echo.
-    echo WARNING: These certificates trust the Guangdong Digital Certificate Authority (GDCA)
-    echo to issue code-signing and SSL certificates. Removing them will affect
-    echo software and websites that rely on GDCA-issued certificates.
-    echo.
-    echo If you use Chinese government online services (tax, social security, etc.),
-    rem DO NOT remove these certificates.
-    echo.
-    set /p _gdca_choice="Remove GDCA certificates? [y/N]: "
-    if /i "!_gdca_choice!"=="y" (
-        echo.
-        if !_gdca_root! equ 1 (
-            echo Y 2>nul | certutil -delstore Root "GDCA ROOT CA1" >nul 2>nul
-            if !errorlevel! equ 0 (call :log_ok "Removed: GDCA ROOT CA1 from Root store") else call :log_warn "Failed to remove GDCA ROOT CA1"
-        )
-        if !_gdca_ca1! equ 1 (
-            echo Y 2>nul | certutil -delstore CA "GDCA Public CA1" >nul 2>nul
-            if !errorlevel! equ 0 (call :log_ok "Removed: GDCA Public CA1 from CA store") else call :log_warn "Failed to remove GDCA Public CA1"
-        )
-        if !_gdca_ca2! equ 1 (
-            echo Y 2>nul | certutil -delstore CA "GDCA Public CA2" >nul 2>nul
-            if !errorlevel! equ 0 (call :log_ok "Removed: GDCA Public CA2 from CA store") else call :log_warn "Failed to remove GDCA Public CA2"
-        )
-    ) else (
-        call :log_skip "GDCA certificates kept"
+    if !_gdca_root! equ 1 (
+        echo Y 2>nul | certutil -delstore Root "GDCA ROOT CA1" >nul 2>nul
+        if !errorlevel! equ 0 (call :log_ok "Removed: GDCA ROOT CA1 from Root store") else call :log_warn "Failed to remove GDCA ROOT CA1"
+    )
+    if !_gdca_ca1! equ 1 (
+        echo Y 2>nul | certutil -delstore CA "GDCA Public CA1" >nul 2>nul
+        if !errorlevel! equ 0 (call :log_ok "Removed: GDCA Public CA1 from CA store") else call :log_warn "Failed to remove GDCA Public CA1"
+    )
+    if !_gdca_ca2! equ 1 (
+        echo Y 2>nul | certutil -delstore CA "GDCA Public CA2" >nul 2>nul
+        if !errorlevel! equ 0 (call :log_ok "Removed: GDCA Public CA2 from CA store") else call :log_warn "Failed to remove GDCA Public CA2"
     )
 ) else (
-    call :log_skip "No GDCA certificates found"
+    call :log_skip "GDCA certificates kept"
 )
+
+:after_section4
 
 :: ===== Summary =====
 echo.
