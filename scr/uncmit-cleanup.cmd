@@ -168,6 +168,41 @@ if /i "!_gdca_choice!"=="y" (
 
 :after_section4
 
+echo.
+echo === SECTION 5: CDPSvc / CDPUserSvc (Connected Devices Platform) ===
+echo.
+rem Detect CDPSvc and CDPUserSvc state
+set _cdp_need=0
+sc qc CDPSvc | find "DISABLED" >nul 2>nul
+if !errorlevel! neq 0 set _cdp_need=1
+sc qc CDPUserSvc | find "DISABLED" >nul 2>nul
+if !errorlevel! neq 0 set _cdp_need=1
+
+if !_cdp_need! equ 1 (
+    echo [DETECT] CDPSvc and/or CDPUserSvc are not disabled.
+    echo.
+    echo Disabling Connected Devices Platform breaks: Phone Link,
+    echo cross-device features, nearby sharing, DDS registration.
+    echo.
+    set /p _cdp_choice="Disable CDPSvc and CDPUserSvc? [y/N]: "
+    if /i "!_cdp_choice!"=="y" (
+        sc stop CDPSvc >nul 2>nul
+        sc config CDPSvc start=disabled >nul 2>nul
+        if !errorlevel! equ 0 (call :log_ok "CDPSvc disabled") else call :log_warn "CDPSvc disable failed"
+
+        rem Stop all CDPUserSvc_* user instance services
+        for /f "tokens=2 delims= " %%s in ('sc query state^= all ^| find "CDPUserSvc_"') do (
+            sc stop %%s >nul 2>nul
+        )
+        sc config CDPUserSvc start=disabled >nul 2>nul
+        if !errorlevel! equ 0 (call :log_ok "CDPUserSvc disabled") else call :log_warn "CDPUserSvc disable failed"
+    ) else (
+        call :log_skip "CDPSvc/CDPUserSvc kept"
+    )
+) else (
+    call :log_skip "CDPSvc/CDPUserSvc already disabled"
+)
+
 :: ===== Summary =====
 echo.
 echo ========================================
